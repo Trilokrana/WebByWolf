@@ -1,11 +1,26 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Roboto_Condensed, Inter } from "next/font/google";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const robotoCondensed = Roboto_Condensed({
+  variable: "--font-roboto-condensed",
   subsets: ["latin"],
+  weight: ["700"],
 });
+
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+  weight: ["600"],
+});
+
+// Add these color variables to your CSS
+// :root {
+//   --color-primary: #1959AC;
+//   --color-secondary: #0546D2;
+//   --color-text: #222222;
+// }
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
@@ -25,7 +40,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${robotoCondensed.variable} ${robotoCondensed.variable} antialiased`}
       >
         {children}
       </body>
