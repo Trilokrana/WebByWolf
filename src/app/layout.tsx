@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { Roboto_Condensed, Inter } from "next/font/google";
+import { Roboto_Condensed } from "next/font/google";
 
 const robotoCondensed = Roboto_Condensed({
   variable: "--font-roboto-condensed",
@@ -9,11 +8,11 @@ const robotoCondensed = Roboto_Condensed({
   weight: ["700"],
 });
 
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-  weight: ["600"],
-});
+// const inter = Inter({
+//   variable: "--font-inter",
+//   subsets: ["latin"],
+//   weight: ["600"],
+// });
 
 // Add these color variables to your CSS
 // :root {
@@ -22,10 +21,10 @@ const inter = Inter({
 //   --color-text: #222222;
 // }
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+// const geistMono = Geist_Mono({
+//   variable: "--font-geist-mono",
+//   subsets: ["latin"],
+// });
 
 export const metadata: Metadata = {
   title: "Create Next App",

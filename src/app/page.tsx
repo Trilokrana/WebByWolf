@@ -2,8 +2,8 @@
 import React from 'react';
 import Image from 'next/image';
 import { Roboto_Condensed, Inter } from 'next/font/google';
-import rider from '../../public/rider.svg';  
-import arrow from '../../public/arrow.svg'; 
+import rider from '../../public/rider.svg';
+import arrow from '../../public/arrow.svg';
 import bike from '../../public/bike.svg';
 import hands from '../../public/hands.svg';
 import friends from '../../public/friends.svg';
@@ -17,7 +17,7 @@ import Cards from './components/Cards';
 import Form from './components/Form';
 import iphone from '../../public/hand_mobile.svg';
 import google from '../../public/google_play.svg';
-import apple from '../../public/apple_play.svg'; 
+import apple from '../../public/apple_play.svg';
 import Gallery from './components/Gallery';
 import cycle from '../../public/chirodc_Two.svg'
 import Carousel from './components/Carousel';
@@ -28,7 +28,7 @@ import push from '../../public/push.svg'
 import Artist from './components/Artist';
 import Accordion from './components/Accordion';
 import Footer from './components/Footer';
-import { motion, useScroll, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
 
 
@@ -45,132 +45,130 @@ const inter = Inter({
 });
 
 const Page = () => {
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <main className='bg-white'>
       <div
         className={`relative min-h-screen flex flex-col md:flex-row ${robotoCondensed.variable} ${inter.variable}`}
       >
-   
-        {(() => {
-          const [scrolled, setScrolled] = useState(false);
-          const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-          useEffect(() => {
-            const handleScroll = () => {
-              setScrolled(window.scrollY > 50);
-            };
 
-            window.addEventListener('scroll', handleScroll);
-            return () => window.removeEventListener('scroll', handleScroll);
-          }, []);
+        return (
+        <>
+          <motion.header
+            className={`fixed top-0 left-0 w-full flex justify-between items-center p-4 z-30 transition-all ${scrolled ? 'bg-white shadow-md py-2' : 'bg-white py-4'
+              }`}
+            initial={{ y: -100 }}
+            animate={{ y: 0 }}
+            transition={{ type: 'spring', stiffness: 100, damping: 20 }}
+          >
+            <motion.div
+              className="bg-gray-200 px-4 py-2 font-bold"
+              whileHover={{ scale: 1.05 }}
+              transition={{ type: 'spring', stiffness: 300 }}
+            >
+              LOGO
+            </motion.div>
 
-          return (
-            <>
-              <motion.header
-                className={`fixed top-0 left-0 w-full flex justify-between items-center p-4 z-30 transition-all ${scrolled ? 'bg-white shadow-md py-2' : 'bg-white py-4'
-                  }`}
-                initial={{ y: -100 }}
-                animate={{ y: 0 }}
-                transition={{ type: 'spring', stiffness: 100, damping: 20 }}
+            <nav className="hidden md:flex bg-amber-200">
+              <ul className="flex list-none gap-6">
+                {['Lorem Ipsum', 'Lorem Ipsum', 'Lorem Ipsum'].map((item, index) => (
+                  <motion.li
+                    key={index}
+                    whileHover={{ scale: 1.1, color: '#0546D2' }}
+                    transition={{ type: 'spring', stiffness: 300 }}
+                  >
+                    <a href="#" className="text-[#1959AC] no-underline">
+                      {item}{' '}
+                      <span>
+                        <Image
+                          src={arrow}
+                          alt="dropdown"
+                          width={12}
+                          height={12}
+                          className="inline-block"
+                        />
+                      </span>
+                    </a>
+                  </motion.li>
+                ))}
+              </ul>
+            </nav>
+
+            <div className="flex items-center">
+              <motion.button
+                className="bg-white border rounded px-4 sm:px-8 py-2 cursor-pointer shadow mr-2 sm:mr-10 font-bold hidden sm:block"
+                whileHover={{ scale: 1.05, backgroundColor: '#f8f8f8' }}
+                whileTap={{ scale: 0.95 }}
               >
+                Sign In
+              </motion.button>
+
+              <button
+                className="md:hidden p-2 focus:outline-none"
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  {mobileMenuOpen ? (
+                    <path d="M18 6L6 18M6 6l12 12" />
+                  ) : (
+                    <>
+                      <path d="M3 12h18M3 6h18M3 18h18" />
+                    </>
+                  )}
+                </svg>
+              </button>
+            </div>
+          </motion.header>
+
+
+          <AnimatePresence>
+            {mobileMenuOpen && (
+              <>
+
                 <motion.div
-                  className="bg-gray-200 px-4 py-2 font-bold"
-                  whileHover={{ scale: 1.05 }}
-                  transition={{ type: 'spring', stiffness: 300 }}
+                  className="fixed inset-0 bg-gray-400 bg-opacity-50 z-10 md:hidden"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                />
+                <motion.div
+                  className="fixed top-[60px] left-0 w-full bg-white z-20 shadow-lg py-4 md:hidden"
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.3 }}
                 >
-                  LOGO
+                  <nav className="px-4">
+                    <ul className="flex flex-col list-none gap-4">
+                      {['Lorem Ipsum', 'Lorem Ipsum', 'Lorem Ipsum'].map((item, index) => (
+                        <li key={index} className="py-2 border-b border-gray-300">
+                          <a href="#" className="text-[#1959AC] no-underline flex justify-between">
+                            {item}
+                            <Image src={arrow} alt="dropdown" width={12} height={12} />
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </nav>
                 </motion.div>
-
-                <nav className="hidden md:flex bg-amber-200">
-                  <ul className="flex list-none gap-6">
-                    {['Lorem Ipsum', 'Lorem Ipsum', 'Lorem Ipsum'].map((item, index) => (
-                      <motion.li
-                        key={index}
-                        whileHover={{ scale: 1.1, color: '#0546D2' }}
-                        transition={{ type: 'spring', stiffness: 300 }}
-                      >
-                        <a href="#" className="text-[#1959AC] no-underline">
-                          {item}{' '}
-                          <span>
-                            <Image
-                              src={arrow}
-                              alt="dropdown"
-                              width={12}
-                              height={12}
-                              className="inline-block"
-                            />
-                          </span>
-                        </a>
-                      </motion.li>
-                    ))}
-                  </ul>
-                </nav>
-
-                <div className="flex items-center">
-                  <motion.button
-                    className="bg-white border rounded px-4 sm:px-8 py-2 cursor-pointer shadow mr-2 sm:mr-10 font-bold hidden sm:block"
-                    whileHover={{ scale: 1.05, backgroundColor: '#f8f8f8' }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    Sign In
-                  </motion.button>
-
-                  <button
-                    className="md:hidden p-2 focus:outline-none"
-                    onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      {mobileMenuOpen ? (
-                        <path d="M18 6L6 18M6 6l12 12" />
-                      ) : (
-                        <>
-                          <path d="M3 12h18M3 6h18M3 18h18" />
-                        </>
-                      )}
-                    </svg>
-                  </button>
-                </div>
-              </motion.header>
-
-
-              <AnimatePresence>
-                {mobileMenuOpen && (
-                  <>
- 
-                    <motion.div
-                      className="fixed inset-0 bg-gray-400 bg-opacity-50 z-10 md:hidden"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.2 }}
-                    />
-                    <motion.div
-                      className="fixed top-[60px] left-0 w-full bg-white z-20 shadow-lg py-4 md:hidden"
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
-                      exit={{ opacity: 0, height: 0 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <nav className="px-4">
-                        <ul className="flex flex-col list-none gap-4">
-                          {['Lorem Ipsum', 'Lorem Ipsum', 'Lorem Ipsum'].map((item, index) => (
-                            <li key={index} className="py-2 border-b border-gray-300">
-                              <a href="#" className="text-[#1959AC] no-underline flex justify-between">
-                                {item}
-                                <Image src={arrow} alt="dropdown" width={12} height={12} />
-                              </a>
-                            </li>
-                          ))}
-                        </ul>
-                      </nav>
-                    </motion.div>
-                  </>
-                )}
-              </AnimatePresence>
-            </>
-          );
-        })()}
-
+              </>
+            )}
+          </AnimatePresence>
+        </>
+        );
 
         <div className="flex flex-col md:flex-row w-full mt-16 md:mt-0">
 
@@ -246,36 +244,36 @@ const Page = () => {
       </div>
 
       <div className="max-w-7xl mx-auto shadow-xl bg-[#FFFFFF99] mt-24">
-    
+
         <div className="max-w-7xl mx-auto px-8 pt-4 ">
 
-  
+
           <div className="text-[#0546D2] text-[24px] mb-4 font-semibold">
             <a href="#" className="hover:underline ">Lorem ipsum dolor sit</a>
           </div>
 
-       
+
           <div className="flex flex-col md:flex-row gap-12 mb-8">
 
-       
+
             <div className="w-full md:w-1/2">
-         
+
               <div className="font-[var(--font-roboto-condensed)]">
                 <h2 className="text-[42px] font-bold uppercase tracking-tight leading-tight mb-4">
                   LOREM IPSUM<br />DOLOR SIT AMET
                 </h2>
               </div>
 
-           
+
               <p className="font-[var(--font-inter)] text-lg mb-6">
                 Lorem ipsum dolor sit amet consectetur. Amet sodales sociis facilisis donec dui.
                 Mi porttitor ut aliquam mattis maecenas eget integer in nam. Non nisi iaculis at felis aliquet.
                 Hendrerit tellus at purus lectus.
               </p>
 
-          
+
               <div className="space-y-4">
-             
+
                 <div className="flex gap-4">
                   <div className="flex-shrink-0">
                     <Image
@@ -310,7 +308,7 @@ const Page = () => {
                   </div>
                 </div>
 
-               
+
                 <div className="flex gap-4">
                   <div className="flex-shrink-0">
                     <Image
@@ -330,7 +328,7 @@ const Page = () => {
               </div>
             </div>
 
-    
+
             <div className="w-full md:w-1/2">
               <div className="relative w-full aspect-[4/3] h-full">
                 <Image
@@ -343,7 +341,7 @@ const Page = () => {
             </div>
           </div>
 
-      
+
           <div className="flex flex-wrap items-center gap-6 mt-6 mb-10">
             <a href="#" className="bg-[#1959AC] text-white px-4 py-2 rounded text-lg font-bold flex items-center">
               <span>Lorem ipsum</span>
@@ -365,7 +363,7 @@ const Page = () => {
             </div>
           </div>
 
-       
+
 
         </div>
         <div className="max-w-7xl mx-auto pr-8">
@@ -375,30 +373,30 @@ const Page = () => {
 
       <div className="max-w-7xl mx-auto shadow-xl bg-[#FFFFFF99] mt-24 mb-24">
         <div className="max-w-7xl mx-auto px-8 pt-4 pb-8 mb-12 ">
-       
+
           <div className="text-[#0546D2] text-[24px] mb-4 font-semibold">
             <a href="#" className="hover:underline">Lorem ipsum dolor sit amet</a>
           </div>
 
-       
+
           <div className="flex flex-col md:flex-row gap-12">
-        
+
             <div className="w-full md:w-1/2">
-            
+
               <div className="font-[var(--font-roboto-condensed)]">
                 <h2 className="text-[32px] font-bold tracking-tight leading-tight mb-6">
                   LOREM IPSUM DOLOR SIT<br />AMET CONSECTETUR. EU<br />ELIT.
                 </h2>
               </div>
 
-            
+
               <p className="font-[var(--font-inter)] text-lg mb-8">
                 Lorem ipsum dolor sit amet consectetur. Mauris ullamcorper etiam leo eleifend condimentum in vitae faucibus. Amet massa malesuada sit pretium. Donec pharetra erat lacus suspendisse ornare.
               </p>
 
-         
+
               <div className="space-y-4">
-             
+
                 <div className="flex gap-4">
                   <div className="flex-shrink-0">
                     <Image
@@ -417,7 +415,7 @@ const Page = () => {
                   </div>
                 </div>
 
-              
+
                 <div className="flex gap-4">
                   <div className="flex-shrink-0">
                     <Image
@@ -436,7 +434,7 @@ const Page = () => {
                   </div>
                 </div>
 
-            
+
                 <div className="flex gap-4">
                   <div className="flex-shrink-0">
                     <Image
@@ -457,7 +455,7 @@ const Page = () => {
               </div>
             </div>
 
-      
+
             <div className="w-full md:w-1/2">
               <div className="relative w-full aspect-[4/3] h-full">
                 <Image
@@ -474,7 +472,7 @@ const Page = () => {
           <div className="h-3 bg-gradient-to-r from-[#043898] via-[#079902] to-[#170041]" />
         </div>
       </div>
-      
+
       <motion.div
         className="relative w-full h-[400px] sm:h-[400px] md:h-[500px] overflow-hidden mb-16 sm:mb-20 md:mb-24"
         initial={{ opacity: 0 }}
@@ -482,7 +480,7 @@ const Page = () => {
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
       >
-      
+
         <motion.div
           className="absolute inset-0"
           initial={{ scale: 1.2 }}
@@ -506,7 +504,7 @@ const Page = () => {
           />
         </motion.div>
 
-    
+
         <motion.div
           className="absolute top-4 sm:top-6 left-4 sm:left-8 md:left-14 bg-white px-4 sm:px-6 py-1 sm:py-2 font-extrabold text-xl sm:text-2xl md:text-[32px]"
           initial={{ x: -100, opacity: 0 }}
@@ -525,9 +523,9 @@ const Page = () => {
           LOGO
         </motion.div>
 
- 
+
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4 sm:px-8 md:px-16 mt-15">
-         
+
           <motion.h2
             className="text-white text-2xl sm:text-3xl md:text-[42px] lg:text-5xl font-[var(--font-roboto-condensed)] mb-4 sm:mb-6 md:mb-8 max-w-xs sm:max-w-xl md:max-w-4xl uppercase tracking-tight"
             initial={{ y: 50, opacity: 0 }}
@@ -543,7 +541,7 @@ const Page = () => {
             LOREM IPSUM DOLOR SIT AMET CONSECTETUR. QUIS ADIPISCING PURUS EGESTAS ALIQUAM VIVERRA MI.
           </motion.h2>
 
-       
+
           <motion.div
             className="max-w-xs sm:max-w-lg md:max-w-3xl space-y-3 sm:space-y-4"
             initial={{ y: 30, opacity: 0 }}
@@ -561,7 +559,7 @@ const Page = () => {
             </p>
           </motion.div>
 
-      
+
           <motion.button
             className="bg-transparent hover:bg-white text-white hover:text-black border-2 border-white px-6 py-2 mt-6 sm:mt-8 font-medium text-sm sm:text-base transition-colors duration-300 hidden sm:block"
             initial={{ y: 30, opacity: 0 }}
@@ -574,7 +572,7 @@ const Page = () => {
           </motion.button>
         </div>
 
-       
+
         <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-black/40 pointer-events-none"></div>
       </motion.div>
       <Brands />
@@ -586,7 +584,7 @@ const Page = () => {
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
       >
- 
+
         <motion.div
           className="absolute inset-0"
           initial={{ scale: 1.2 }}
@@ -610,7 +608,7 @@ const Page = () => {
           />
         </motion.div>
 
-       
+
         <motion.div
           className="absolute top-4 sm:top-6 left-4 sm:left-8 md:left-14 bg-white px-4 sm:px-6 py-1 sm:py-2 font-extrabold text-xl sm:text-2xl md:text-[32px]"
           initial={{ x: -100, opacity: 0 }}
@@ -831,7 +829,7 @@ const Page = () => {
         transition={{ duration: 0.7 }}
       >
         <div className="flex flex-col md:flex-row gap-6 md:gap-8">
-      
+
           <motion.div
             className="w-full md:w-1/2"
             initial={{ opacity: 0, x: -30 }}
@@ -849,7 +847,7 @@ const Page = () => {
               LOREM IPSUM DOLOR SIT AMET
             </motion.h2>
 
-            
+
             <motion.div
               className="flex flex-wrap sm:flex-nowrap mb-4 sm:mb-6 border rounded-md overflow-hidden shadow-sm"
               initial={{ opacity: 0, y: 20 }}
@@ -924,7 +922,7 @@ const Page = () => {
             </motion.a>
           </motion.div>
 
-         
+
           <motion.div
             className="w-full md:w-1/2 mt-6 md:mt-0"
             initial={{ opacity: 0, x: 30 }}
@@ -1036,9 +1034,9 @@ const Page = () => {
           </div>
         </motion.section>
 
-       
+
         <div className="w-full lg:w-1/2 relative mx-auto lg:ml-3 mt-10">
-          
+
           <motion.div
             className="absolute -top-20 sm:-top-30 md:-top-40 right-0 left-0 lg:left-auto lg:right-4 xl:right-35 w-full max-w-xs sm:max-w-sm md:max-w-md mx-auto lg:mx-0"
             initial={{ opacity: 0, y: 50 }}

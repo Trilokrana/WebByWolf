@@ -43,7 +43,7 @@ const Form = () => {
         const { id, value } = e.target;
         setFormData({ ...formData, [id]: value });
 
-    
+
         if (errors[id as keyof FormData]) {
             setErrors({ ...errors, [id]: undefined });
         }
@@ -80,10 +80,10 @@ const Form = () => {
             setIsSubmitting(true);
 
             try {
-              
+
                 await new Promise(resolve => setTimeout(resolve, 1500));
 
-            
+
                 setIsSuccess(true);
                 setFormData({
                     name: '',
@@ -95,9 +95,10 @@ const Form = () => {
                     description: ''
                 });
 
-             
+
                 setTimeout(() => setIsSuccess(false), 3000);
             } catch (error) {
+                console.error(error);
                 setErrors({ ...errors, submit: "Failed to submit form. Please try again." });
             } finally {
                 setIsSubmitting(false);
@@ -116,7 +117,7 @@ const Form = () => {
 
             <form className="space-y-3 sm:space-y-4 md:space-y-6" onSubmit={handleSubmit}>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 md:gap-6">
-                  
+
                     <div>
                         <label htmlFor="name" className="block text-xs sm:text-sm mb-1 text-[#0E0D0D]">Name*</label>
                         <motion.input
@@ -139,7 +140,7 @@ const Form = () => {
                         )}
                     </div>
 
-                
+
                     <div>
                         <label htmlFor="email" className="block text-xs sm:text-sm mb-1 text-[#0E0D0D]">E-mail*</label>
                         <motion.input
@@ -161,7 +162,7 @@ const Form = () => {
                         )}
                     </div>
 
-                
+
                     <div>
                         <label htmlFor="phone" className="block text-xs sm:text-sm mb-1 text-[#0E0D0D]">Phone Number*</label>
                         <motion.input
@@ -183,7 +184,7 @@ const Form = () => {
                         )}
                     </div>
 
-           
+
                     <div>
                         <label htmlFor="timeFrame" className="block text-xs sm:text-sm mb-1 text-[#0E0D0D]">Time Frame*</label>
                         <div className="relative">
@@ -214,7 +215,7 @@ const Form = () => {
                         )}
                     </div>
 
-              
+
                     <div>
                         <label htmlFor="size" className="block text-xs sm:text-sm mb-1 text-[#0E0D0D]">Size*</label>
                         <div className="relative">
@@ -245,7 +246,7 @@ const Form = () => {
                         )}
                     </div>
 
-         
+
                     <div>
                         <label htmlFor="quantity" className="block text-xs sm:text-sm mb-1 text-[#0E0D0D]">Quantity*</label>
                         <div className="relative">
@@ -277,7 +278,7 @@ const Form = () => {
                     </div>
                 </div>
 
-  
+
                 <div>
                     <label htmlFor="description" className="block text-xs sm:text-sm mb-1 text-[#0E0D0D]">Please Describe Your Project*</label>
                     <motion.textarea
@@ -342,7 +343,7 @@ const Form = () => {
                     </motion.div>
                 )}
 
-     
+
                 <AnimatePresence>
                     {isSuccess && (
                         <motion.div
